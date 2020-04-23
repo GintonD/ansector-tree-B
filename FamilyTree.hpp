@@ -1,66 +1,84 @@
 
-#ifndef _FamilyTree_
-#define _FamilyTree_
+#ifndef UNTITLED2_FAMILYTREE_H
+#define UNTITLED2_FAMILYTREE_H
+#pragma once
 #include <iostream>
-#include <string>
 
-using namespace std;
-class node {
-
+using namespace  std;
+class Node{
 public:
-    string name;
-    string sex;
-    string relation;
-    int height;
-    node *father;
-    node *mother;
+ int height  ;
+ int sex ;
+ string name;
+ Node* father;
+ Node* mother;
 
-    node(string _name)
-    { // Constructor with parameters
-        this->name = _name;
-        this->height=0;
-        this->relation="";
-        this->father = this->mother = nullptr;
+
+ Node(string name)
+ {
+     this->height = 0 ;
+     this->sex = 0 ;
+     this->name = name;
+     this->father = NULL;
+     this->mother = NULL;
+
+ };
+
+    ~ Node(){
+        setFatherNull();
+        setMotherNull();
     }
-    ~node(){
-        delete this->father;
-        delete this->mother;
 
-
+    void setFatherNull(){
+        this->father=NULL;
     }
-//    node* findNode(string son,node *node);
+
+    void setMotherNull(){
+        this->mother=NULL;
+    }
+
 };
 
-
-namespace family
-{
+namespace family {
 
 
-
-    class Tree{
+    class Tree {
 
     public:
-        node *head;
-        //Constractur
-
-//Constractor
-        Tree(string _name)
-        {
-            this->head = new node(_name);
-
-        }
-
+        Node *root;
+        int size ;
+        int maxHeight;
+        Tree(string name) {
+            this->root = new Node(name);
+            size = 1 ;
+            maxHeight = 0 ;
+        };
 
 
-        Tree& addFather(string son, string father);
-        Tree& addMother(string son, string mather);
+        Tree& addMother(const string, const string);
+
+        string relation(const string);
+
+        string find(const string);
+
         void display();
 
-        string relation(string ancestor);
-        string find(string nameOfFind);
-        bool remove(string ancestor);
+        void remove(const string);
 
-        void deleteSubTree(node *pNode);
-    }; // class Tree
-}// namespace family
-#endif
+        Tree& addFather( string,  string);
+
+
+        void findthis(const string , Node *pNode , Node **pNode1);
+
+        void findtheFamily(int sex, int count, Node *pNode, Node **pNode1);
+
+        void print2DUtil(Node *pNode,int space);
+
+
+        void findthischild(const string basicString, Node *pNode, Node **pNode1);
+    };
+}
+
+
+
+#endif //UNTITLED2_FAMILYTREE_H

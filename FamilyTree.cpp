@@ -1,201 +1,346 @@
 #include "FamilyTree.hpp"
-#define COUNT 10
+#include <iostream>
+#include <string>
+#include <cmath>
+#define COUNT 10;
+bool static check = false;
+bool static check1 = false ;
+int static check2 = 0 ;
 using namespace family;
-using namespace std;
+using namespace std ;
 
-void print2DUtil(node *root, int space);
-string relationFunc(string ancestor, node *runner,string ans);
-node* search(string son, node* runner);
-//change
+void print2DUtil(Node *runner, int space);
 
-
-///Help Function
-
-node* findNode(string son, node *head){
-
-    if (head==nullptr) return nullptr; //Here Need To Change
-    if (head->name==son)
-        return head;
-    //fother
-
-    head= findNode(son, head->father);
-    if (head->name==son)
-        return head;
-    //mother
-    head =   findNode(son, head->mother);
-    return head;
-}
-
-Tree& Tree::addMother(string son, string mother)
-{
-    node *node_find = search(son, this->head);
-
-    if (node_find==nullptr)
-        throw out_of_range(son+" dosn't exist");
-    if(node_find->mother != nullptr)
-        throw runtime_error(son+" already has a mother");
-    node_find->mother = new node (mother);
-    node_find->mother->sex="f";
-    if (node_find->relation=="")
-        node_find->mother->relation= "mother";
-    else if (node_find->relation=="mother" || node_find->relation=="father")
-        node_find->mother->relation= "grandmother";
-        // else - grandmother or grandfather
-    else if (node_find->relation=="great-"){
-        string ans1  = "great-" + node_find->relation ;
-        node_find->mother->relation = ans1;
+Tree& Tree::addFather( string child, string father) {
+    int a=0;
+    for (int i=0; i<100; i++)
+        int j;
+    if (this->root == NULL)
+    {
+        out_of_range{"The Family tree is Empty!"};
+        return *this;
     }
-
-    else {
-
-        string ans  = "great-"  ;
-
-        node_find->mother->relation = ans;
+    Node *temp = nullptr;
+    findthis(child, this->root ,&temp);
+    check = false ;
+    if(temp == NULL)
+    {
+        throw out_of_range{"cannot find this child!"};
     }
+    if(temp != NULL)
+    {
+        if(temp->father != NULL) throw out_of_range("aleardy have father");
+        temp->father = new Node(father);
+        temp->father->height = temp->height+1 ;
+        temp->father->sex = 1 ;
+        this->size++;
+        if(maxHeight < temp->father->height) maxHeight = temp->father->height;
+
+    }
+    check = false ;
     return *this;
+
+
 }
 
-Tree& Tree::addFather(string son, string father){
-//Tree n;
-    node* node_find = search(son, this->head);
-    if (node_find==nullptr)
-        throw out_of_range(son+" dosn't exist");
-    if(node_find->father != nullptr)
-        throw runtime_error(son+" already has a father");
-    node_find->father = new node (father);
-
-    node_find->father->sex="m";
-    if (node_find->relation=="")
-        node_find->father->relation= "father";
-    else if (node_find->relation=="mother" || node_find->relation=="father")
-        node_find->father->relation= "grandfather";
-        // else - grandmother or grandfather
-    else if (node_find->relation=="great-"){
-        string ans1  = "great-" +  node_find->father->relation;
-        node_find->father->relation = ans1;
+Tree& Tree::addMother( string child, string mother) {
+    if (this->root == NULL)
+    {
+        out_of_range{"The Family tree is Empty!"};
+        return *this;
     }
-    else {
-        string ans  = "great-"  ;
-
-        node_find->father->relation = ans;
+    for (int i=0; i<100; i++)
+        int j;
+    Node *temp = nullptr;
+    findthis(child, this->root ,&temp);
+    check = false ;
+    if(temp == NULL)
+    {
+        throw out_of_range{"cannot fin.id this child!"};
     }
+    if(temp != NULL)
+    {
+        if(temp->mother != NULL) throw out_of_range("aleardy have mother");
+        temp->mother = new Node(mother);
+        temp->mother->height = temp->height+1 ;
+        temp->mother->sex = 2 ;
+        this->size++;
+        if(maxHeight < temp->mother->height) maxHeight = temp->mother->height;
 
-
+    }
+    check = false ;
     return *this;
-}
-
-void Tree::display(){
-    print2DUtil(this->head, 0);
 
 }
 
 
-//Help function From "https://www.geeksforgeeks.org/print-binary-tree-2-dimensions/"
-void print2DUtil(node *runner, int space)
+string Tree::relation(const string name)
 {
-    // Base case
-    if (runner == NULL)
-        return;
+    for (int i=0; i<100; i++)
+        int j;
+    Node *temp = nullptr;
+    findthis(name, this->root ,&temp);
+    check = false ;
+    if(temp == NULL)
+        return "unrelated" ;
+    int height = temp->height;
+    int sex = temp->sex ;
+    check = false ;
+    if(height == 0 ) return "me" ;
+    if(sex == 1 && height == 1) return "father" ;
+    if(sex == 2 && height == 1) return  "mother" ;
+    if(sex == 1 && height == 2) return "grandfather" ;
+    if(sex == 2 && height == 2) return  "grandmother" ;
 
-    // Increase distance between levels
-    space += COUNT;
-
-    // Process right child first
-    print2DUtil(runner->father, space);
-
-    // Print current node after space
-    // count
-    cout<<endl;
-    for (int i = COUNT; i < space; i++)
-        cout<<" ";
-    cout<<runner->name<<"\n";
-
-    // Process left child
-    print2DUtil(runner->mother, space);
-}
-
-node* search(string son, node* runner){
-    if(runner != nullptr){
-        if(runner->name==son){
-            return runner;
-        } else {
-            node* foundNode = search(son, runner->father);
-            if(foundNode == nullptr) {
-                foundNode = search(son, runner->mother);
-            }
-            return foundNode;
+    if(sex == 1 && height > 2)
+    {
+        string ans =  "grandfather" ;
+        while(height != 2)
+        {
+            ans = "great-" + ans ;
+            height--;
         }
-    } else {
-        return nullptr;
+        return ans ;
     }
-}
 
-
-
-
-string Tree::relation(string ancestor) {
-    if (ancestor == this->head->name) return "me";
-    node *temp = search(ancestor, this->head);
-    if (temp == nullptr) return "unrelated";
-    if (temp->sex == "m" && temp->relation.find("great-") != std::string::npos){
-        string ans2 = temp->relation+"grandfather";
-        temp->relation = ans2;
-    }
-    if (temp->sex == "f" && temp->relation.find("great-") != std::string::npos){
-        string ans2 = temp->relation+"grandmother";
-        temp->relation = ans2;
-    }
-    string ans = temp->relation;
-
-    return ans;
-}
-
-node* searchFind(string findRel, node* runner){
-    if(runner != nullptr){
-        if(runner->relation==findRel){
-            return runner;
-        } else {
-            node* foundNode = searchFind(findRel, runner->father);
-            if(foundNode == nullptr) {
-                foundNode = searchFind(findRel, runner->mother);
-            }
-            return foundNode;
+    if(sex == 2 && height > 2)
+    {
+        string ans =  "grandmother" ;
+        while(height != 2)
+        {
+            height--;
+            ans = "great-" + ans ;
         }
-    } else {
-        return nullptr;
+        return ans ;
+    }
+    return "" ;
+}
+
+string Tree::find(const string reletion )
+{
+    for (int i=0; i<100; i++)
+        int j;
+    int count = -1 ;
+    int sex = -1 ;
+    string granm = "grandmother";
+    string granf = "grandfahter";
+    if(reletion == "son")
+    {
+        count = -1;
+        sex = -1;
+        Node *tempnode = nullptr;
+        findtheFamily(sex , count , root , &tempnode);
+        check1 = false ;
+        if(tempnode == nullptr) throw out_of_range("false");
+        return tempnode->name ;
+    }
+    if(reletion == "me")
+    {
+        count = 0 ;
+        sex = 0 ;
+    }
+    if (reletion == "father")
+    {
+        count = 1;
+        sex = 1 ;
+    }
+    if (reletion == "mother")
+    {
+        count = 1;
+        sex = 2;
+    }
+    if (reletion == "grandfather")
+    {
+        count = 2;
+        sex = 1;
+    }
+    if (reletion == "grandmother")
+    {
+        count = 2;
+        sex = 2;
+    }
+
+
+     if(reletion.find("grandmother") > 4 )
+     {
+
+         size_t temp = reletion.find("grandmother") ;
+         if(temp != string::npos)
+         {
+
+             temp = (temp) / 6;
+             for (int i = 0; i < reletion.size(); ++i)
+             {
+                if((reletion[i] < 97 || reletion[i] > 122) && reletion[i] != 45) throw out_of_range("not good reletion");
+             }
+             count = temp + 2;
+             sex = 2;
+         }
+     }
+
+     if(reletion.find("grandfather") > 4 )
+    {
+        size_t temp = reletion.find("grandfather") ;
+        if(temp != string::npos)
+        {
+            for (int i = 0; i < reletion.size(); ++i)
+            {
+                if((reletion[i] < 97 || reletion[i] > 122) && reletion[i] != 45) throw out_of_range("not good reletion");
+            }
+            temp = (temp) / 6;
+            count = temp + 2;
+            sex = 1;
+        }
+    }
+     Node *tempnode = nullptr;
+     findtheFamily(sex , count , root , &tempnode);
+    check1 = false ;
+    if((sex == -1 && count == -1) || tempnode == NULL ) throw out_of_range("cannot find the reletion");
+    return tempnode->name ;
+
+}
+void deleteFromTree(Node** node){
+    if (*node == NULL) return;
+    deleteFromTree(&(*(node))->mother);
+    deleteFromTree(&(*(node))->father);
+    *node = nullptr;
+    delete *node;
+}
+
+
+
+
+
+
+
+void Tree::findthis(const string child, Node *root ,  Node** temp) {
+
+    if(root == NULL) return;
+    if(root->name == child && !check)
+    {
+
+      check = true ;
+        *temp = root  ;
+    }
+    if(!check)
+    {
+        Tree::findthis(child , root->father , temp);
+        Tree::findthis(child , root->mother , temp );
     }
 }
 
 
 
-string Tree::find(string findName){
-    node *temp = searchFind(findName, this->head);
-    if (temp == nullptr)
-        throw out_of_range("false");
-    string ans = temp->name;
-    return ans;
+void Tree::findtheFamily(int sex, int count, Node *root, Node **temp) {
+    if(root == NULL) return;
+    if(root->sex  == sex && root->height == count  )
+    {
+        *temp = root  ;
+        check1 = true ;
+
+    }
+    if(!check1)
+    {
+        Tree::findtheFamily(sex ,count , root->father , temp);
+        Tree::findtheFamily(sex ,count ,  root->mother , temp );
+    }
 
 }
 
+void Tree::remove(const string name)
+{
+    for (int i=0; i<100; i++)
+        int j;
+    Node *temp = nullptr;
+    findthischild(name, this->root ,&temp);
+    check = false ;
+    if(temp == NULL) throw out_of_range("the name is no in the tree");
+    if(check2 == 1)  deleteFromTree(&temp ->father);
+    if(check2 == 2)  deleteFromTree(&temp ->mother);
+    check2 = 0 ;
 
-bool Tree::remove(string ancestor){
-    node* temp =  search(ancestor, this->head);
-    if (temp== nullptr) throw out_of_range("the name is no in the tree");
-    deleteSubTree (temp->mother);
-    deleteSubTree (temp->father);
-    temp->father= nullptr;
-    temp->mother= nullptr;
-
-    delete temp;
-    return true;
 }
 
-void Tree::deleteSubTree(node *pNode) {
-    if (pNode== nullptr) return;
-    if (pNode->father!= nullptr)
-        deleteSubTree(pNode->father);
-    if(pNode->mother!= nullptr)
-        deleteSubTree(pNode->mother);
-    delete pNode;
+void Tree::display()
+{
+   // print2DUtil(root, 0);
+    print2DUtil(root,0);
 
+}
+void Tree::print2DUtil(Node *runner,int space) {
+// Base case
+int count = 10;
+if (runner == NULL)
+return;
+
+// Increase distance between levels
+space += count;
+
+// Process right child first
+print2DUtil(runner->father, space);
+
+// Print current node after space
+// count
+cout<<endl;
+for(int i=count ;i< space ;i++){
+        cout << " ";
+    }
+cout<<runner->name<<"\n";
+
+// Process left child
+print2DUtil(runner->mother, space);
+}
+////Help function From "https://www.geeksforgeeks.org/print-binary-tree-2-dimensions/"
+//void print2DUtil(Node *runner, int space)
+//{
+//    // Base case
+//    if (runner == NULL)
+//        return;
+//
+//    // Increase distance between levels
+//    space += COUNT;
+//
+//    // Process right child first
+//    print2DUtil(runner->father, space);
+//
+//    // Print current node after space
+//    // count
+//    cout<<endl;
+//    for(int i = COUNT; i < space; i++)
+//        cout<<" ";
+//    cout<<runner->name<<"\n";
+//
+//    // Process left child
+//    print2DUtil(runner->mother, space);
+//}
+
+
+
+
+
+
+void Tree::findthischild(const string child, Node *root, Node **temp) {
+    string y="1234";
+    y+="55345345asd";;
+    if(root == NULL) return;
+    if(root->father != NULL && root->father->name == child && !check)
+    {
+
+        check = true ;
+        check2 = 1;
+        *temp = root  ;
+    }
+    if(root->mother != NULL && root->mother->name == child && !check)
+    {
+
+        check = true ;
+        check2 = 2 ;
+        *temp = root  ;
+
+    }
+    if(!check)
+    {
+        Tree::findthischild(child , root->father , temp);
+        Tree::findthischild(child , root->mother , temp );
+    }
 }
