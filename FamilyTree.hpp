@@ -5,7 +5,8 @@
 #include <iostream>
 
 using namespace  std;
-class Node{
+class Node
+{
 public:
  int height  ;
  int sex ;
@@ -24,31 +25,37 @@ public:
 
  };
 
-    ~ Node(){
+    ~ Node()
+    {
         setFatherNull();
         setMotherNull();
     }
 
-    void setFatherNull(){
+    void setFatherNull()
+    {
         this->father=NULL;
     }
 
-    void setMotherNull(){
+    void setMotherNull()
+    {
         this->mother=NULL;
     }
 
 };
 
-namespace family {
 
 
-    class Tree {
+namespace family 
+{
+    class Tree 
+    {
 
     public:
         Node *root;
         int size ;
         int maxHeight;
-        Tree(string name) {
+        Tree(string name) 
+        {
             this->root = new Node(name);
             size = 1 ;
             maxHeight = 0 ;
