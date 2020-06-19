@@ -216,7 +216,8 @@ void deleteFromTree(Node** node){
 
 
 
-void Tree::findthis(const string child, Node *root ,  Node** temp) {
+void Tree::findthis(const string child, Node *root ,  Node** temp) 
+{
 
     if(root == NULL) return;
     if(root->name == child && !check)
@@ -234,7 +235,8 @@ void Tree::findthis(const string child, Node *root ,  Node** temp) {
 
 
 
-void Tree::findtheFamily(int sex, int count, Node *root, Node **temp) {
+void Tree::findtheFamily(int sex, int count, Node *root, Node **temp) 
+{
     if(root == NULL) return;
     if(root->sex  == sex && root->height == count  )
     {
@@ -270,7 +272,8 @@ void Tree::display()
     print2DUtil(root,0);
 
 }
-void Tree::print2DUtil(Node *runner,int space) {
+void Tree::print2DUtil(Node *runner,int space) 
+{
 // Base case
 int count = 10;
 if (runner == NULL)
