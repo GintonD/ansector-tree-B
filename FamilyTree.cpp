@@ -14,8 +14,6 @@ void print2DUtil(Node *runner, int space);
 Tree& Tree::addFather( string child, string father) 
 {
     int a=0;
-    for (int i=0; i<100; i++) //unknown
-        int j;
     if (this->root == NULL)
     {
         out_of_range{"The Family tree is Empty!"};
@@ -52,8 +50,7 @@ Tree& Tree::addMother( string child, string mother)
         return *this;
     }
     
-    for (int i=0; i<100; i++) //unknown
-        int j;
+
     Node *temp = nullptr;
     findthis(child, this->root ,&temp);
     check = false ;
@@ -79,8 +76,7 @@ Tree& Tree::addMother( string child, string mother)
 
 string Tree::relation(const string name)
 {
-    for (int i=0; i<100; i++) //unknown
-        int j;
+
     Node *temp = nullptr;
     findthis(name, this->root ,&temp);
     check = false ;
@@ -121,8 +117,7 @@ string Tree::relation(const string name)
 
 string Tree::find(const string reletion )
 {
-    for (int i=0; i<100; i++) //unknown
-        int j;
+
     int count = -1 ;
     int sex = -1 ;
     string granm = "grandmother";
@@ -254,8 +249,6 @@ void Tree::findtheFamily(int sex, int count, Node *root, Node **temp)
 
 void Tree::remove(const string name)
 {
-    for (int i=0; i<100; i++) //unknown
-        int j;
     Node *temp = nullptr;
     findthischild(name, this->root ,&temp);
     check = false ;
