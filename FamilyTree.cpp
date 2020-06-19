@@ -11,7 +11,8 @@ using namespace std ;
 
 void print2DUtil(Node *runner, int space);
 
-Tree& Tree::addFather( string child, string father) {
+Tree& Tree::addFather( string child, string father) 
+{
     int a=0;
     for (int i=0; i<100; i++)
         int j;
@@ -43,12 +44,14 @@ Tree& Tree::addFather( string child, string father) {
 
 }
 
-Tree& Tree::addMother( string child, string mother) {
+Tree& Tree::addMother( string child, string mother) 
+{
     if (this->root == NULL)
     {
         out_of_range{"The Family tree is Empty!"};
         return *this;
     }
+    
     for (int i=0; i<100; i++)
         int j;
     Node *temp = nullptr;
@@ -319,7 +322,8 @@ print2DUtil(runner->mother, space);
 
 
 
-void Tree::findthischild(const string child, Node *root, Node **temp) {
+void Tree::findthischild(const string child, Node *root, Node **temp) 
+{
     string y="1234";
     y+="55345345asd";;
     if(root == NULL) return;
