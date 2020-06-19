@@ -3,7 +3,7 @@
 #include <string>
 #include <cmath>
 #define COUNT 10;
-bool static check = false;
+bool static check = false; //flag of findthis function
 bool static check1 = false ;
 int static check2 = 0 ;
 using namespace family;
@@ -19,21 +19,24 @@ Tree& Tree::addFather( string child, string father)
         out_of_range{"The Family tree is Empty!"};
         return *this;
     }
+    
     Node *temp = nullptr;
-    findthis(child, this->root ,&temp);
-    check = false ;
+    findthis(child, this->root ,&temp); // check if there such child
+    check = false ; //restart the flag
     if(temp == NULL)
     {
         throw out_of_range{"cannot find this child!"};
     }
+    
     if(temp != NULL)
     {
         if(temp->father != NULL) throw out_of_range("aleardy have father");
-        temp->father = new Node(father);
-        temp->father->height = temp->height+1 ;
-        temp->father->sex = 1 ;
+        temp->father = new Node(father); //add the new father
+        temp->father->height = temp->height+1 ; //update the hight
+        temp->father->sex = 1 ; //set the gender number
         this->size++;
-        if(maxHeight < temp->father->height) maxHeight = temp->father->height;
+        if(maxHeight < temp->father->height)
+            maxHeight = temp->father->height;
 
     }
     check = false ;
@@ -51,7 +54,7 @@ Tree& Tree::addMother( string child, string mother)
     }
     
 
-    Node *temp = nullptr;
+    Node *temp = nullptr; //temp for check if there is such a child
     findthis(child, this->root ,&temp);
     check = false ;
     if(temp == NULL)
