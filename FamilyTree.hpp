@@ -74,7 +74,7 @@ namespace family
 
         Tree& addFather( string,  string);
 
-
+// My Helper Function
         void findthis(const string , Node *pNode , Node **pNode1);
 
         void findtheFamily(int sex, int count, Node *pNode, Node **pNode1);
