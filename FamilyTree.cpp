@@ -173,7 +173,7 @@ string Tree::find(const string reletion )
              for (int i = 0; i < reletion.size(); ++i)
              {
                 if((reletion[i] < 97 || reletion[i] > 122) && reletion[i] != 45) throw out_of_range("not good reletion");
-             }
+             } //not from the 'a'-'z' range and not '-'  
              count = temp + 2;
              sex = 2;
          }
