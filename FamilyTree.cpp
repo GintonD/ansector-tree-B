@@ -264,7 +264,6 @@ void Tree::remove(const string name)
 
 void Tree::display()
 {
-   // print2DUtil(root, 0);
     print2DUtil(root,0);
 
 }
@@ -323,8 +322,7 @@ print2DUtil(runner->mother, space);
 
 void Tree::findthischild(const string child, Node *root, Node **temp) 
 {
-    string y="1234";
-    y+="55345345asd";;
+
     if(root == NULL) return;
     if(root->father != NULL && root->father->name == child && !check)
     {
