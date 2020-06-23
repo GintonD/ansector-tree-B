@@ -267,7 +267,24 @@ void Tree::display()
 
 }
 
+// It does reverse inorder traversal  
+//example:
+/*                             david
 
+                    moshe
+
+                              liat
+
+          root
+
+                              yosef
+
+                    rivka
+
+                              rachel
+
+
+*/
 ////Help function From "https://www.geeksforgeeks.org/print-binary-tree-2-dimensions/"
 void Tree::print2DUtil(Node *runner,int space) 
 {
