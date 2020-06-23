@@ -2,7 +2,6 @@
 #include <iostream>
 #include <string>
 #include <cmath>
-#define COUNT 10;
 bool static check = false; //flag of findthis function
 bool static check1 = false ;
 int static check2 = 0 ;
@@ -267,6 +266,9 @@ void Tree::display()
     print2DUtil(root,0);
 
 }
+
+
+////Help function From "https://www.geeksforgeeks.org/print-binary-tree-2-dimensions/"
 void Tree::print2DUtil(Node *runner,int space) 
 {
 // Base case
@@ -283,40 +285,15 @@ print2DUtil(runner->father, space);
 // Print current node after space
 // count
 cout<<endl;
-for(int i=count ;i< space ;i++){
+for(int i=count ;i< space ;i++)
+{
         cout << " ";
-    }
+}
 cout<<runner->name<<"\n";
 
 // Process left child
 print2DUtil(runner->mother, space);
 }
-////Help function From "https://www.geeksforgeeks.org/print-binary-tree-2-dimensions/"
-//void print2DUtil(Node *runner, int space)
-//{
-//    // Base case
-//    if (runner == NULL)
-//        return;
-//
-//    // Increase distance between levels
-//    space += COUNT;
-//
-//    // Process right child first
-//    print2DUtil(runner->father, space);
-//
-//    // Print current node after space
-//    // count
-//    cout<<endl;
-//    for(int i = COUNT; i < space; i++)
-//        cout<<" ";
-//    cout<<runner->name<<"\n";
-//
-//    // Process left child
-//    print2DUtil(runner->mother, space);
-//}
-
-
-
 
 
 
